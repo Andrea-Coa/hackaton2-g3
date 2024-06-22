@@ -1,0 +1,12 @@
+.infinite-scroll-component {
+  margin: auto;
+  margin-top: 5cm;
+  height: 35cm;
+  width: 50cm;
+  overflow: auto;
+}
+
+.table-pagination-image {
+  width: 100cm;
+  height: 100cm;
+}

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import InfiniteScroll from 'components/InfinityScroll/InfiniteScroll'; // Importar el componente InfiniteScroll
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,6 +24,12 @@ function App() {
     </Routes>
    </Router>
   )
+
+  return (
+    <div className="App">
+      <InfiniteScroll />
+    </div>
+  );
 }
 
 export default App
