@@ -1,6 +1,11 @@
 # 
 
 Camila Coveñas Rojas
+
+Jesus Gadiel Velarde Tipte
+
+Elvis Lopez Gambini
+
 Andrea Coa Cruz
 
 ---
@@ -13,4 +18,4 @@ Andrea Coa Cruz
 git fetch origin
 git checkout <nombre-de-rama>
 ```
-Elvis Lopez Gambini
+
