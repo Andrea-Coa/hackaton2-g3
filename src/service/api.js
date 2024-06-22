@@ -13,7 +13,7 @@ export const getRoleBasedOnToken = () => {
 // buscar producto por ID
 export const getProductById = async(id) => {
   const token = localStorage.getItem('token');
-  const response = await axios.get(`${URL}/item/${id}`, {
+  const response = await axios.get(`${URL}/items/${id}`, {
     headers: {'Authorization':`Bearer ${token}`,},
   });
   return response.data;  
@@ -22,20 +22,20 @@ export const getProductById = async(id) => {
 // eliminar producto por ID
 export const deleteProductId = async(id) => {
   const token = localStorage.getItem('token');
-  await axios.delete(`${URL}/item/${id}`, 
+  await axios.delete(`${URL}/items/${id}`, 
   {headers: {'Authorization':`Bearer ${token}`,},});
 }
 
 export const putItem = async (body) => {
   const token = localStorage.getItem('token');
-  const response = await axios.put(`${URL}/item/${body.itemId}`, body, {
+  const response = await axios.put(`${URL}/items/${body.itemId}`, body, {
     headers: {'Authorization':`Bearer ${token}`,},
   });
 };
 
 export const addToCart = async (body) => {
     const token = localStorage.getItem('token');
-    await axios.post(`${URL}/cart`, body, 
+    await axios.put(`${URL}/cart`, body, 
     {headers: {'Authorization':`Bearer ${token}`,},});
 }
 
