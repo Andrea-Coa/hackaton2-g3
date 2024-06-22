@@ -1,6 +1,55 @@
 import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
 
-const URL = "http://127.0.0.1:80";
+
+const URL = "https://cepnq6rjbk.execute-api.us-east-1.amazonaws.com/";
+
+export const getRoleBasedOnToken = () => {
+  const token = localStorage.getItem('token');
+  const decodedToken = jwtDecode(token);
+  return decodedToken.role;
+}
+
+// buscar producto por ID
+export const getProductById = async(id) => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`${URL}/item/${id}`, {
+    headers: {'Authorization':`Bearer ${token}`,},
+  });
+  return response.data;  
+}
+
+// eliminar producto por ID
+export const deleteProductId = async(id) => {
+  const token = localStorage.getItem('token');
+  await axios.delete(`${URL}/item/${id}`, 
+  {headers: {'Authorization':`Bearer ${token}`,},});
+}
+
+export const putItem = async (body) => {
+  const token = localStorage.getItem('token');
+  const response = await axios.put(`${URL}/item/${body.itemId}`, body, {
+    headers: {'Authorization':`Bearer ${token}`,},
+  });
+};
+
+export const addToCart = async (body) => {
+    const token = localStorage.getItem('token');
+    await axios.post(`${URL}/cart`, body, 
+    {headers: {'Authorization':`Bearer ${token}`,},});
+}
+
+
+// OBTENER EL CARRTIO DE UN USUARIO
+export const fetchCart = async () => {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const response = await axios.get(`${URL}/cart/${userId}`, {
+    headers: {'Authorization':`Bearer ${token}`,},
+  });
+  return response.data;
+
+}
 
 export const fetchLogin = async (body) => {
   try {
