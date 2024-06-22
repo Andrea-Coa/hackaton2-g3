@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const URL = "http://127.0.0.1:80";
+const URL = "https://cepnq6rjbk.execute-api.us-east-1.amazonaws.com/";
 
 export const fetchLogin = async (body) => {
   try {
     const response = await axios.post(`${URL}/auth/login`, body);
     if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
+      console.log(token);
     }
     return response;
   } catch (error) {
@@ -14,11 +15,13 @@ export const fetchLogin = async (body) => {
   }
 };
 
-export const fetchRegister = async (body) => {
+export const fetchRegister = async (username, password, role) => {
   try {
-    const response = await axios.post(`${URL}/auth/register`, body);
+    const response = await axios.post(`${URL}/auth/register`, {username, password, role});
     if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
+      console.log(token);
+
     }
     return response;
   } catch (error) {
