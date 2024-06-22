@@ -32,7 +32,7 @@ const Register = () => {
     <>
     <form onSubmit={handleSubmit}>
       <p>
-        <label htmlFor="firstName">Name:</label>
+        <label htmlFor="firstName">Name: </label>
         <input
           type="text"
           name="firstName"
@@ -44,7 +44,7 @@ const Register = () => {
       </p>
 
       <p>
-        <label htmlFor="lastName: ">LastName:</label>
+        <label htmlFor="lastName: ">LastName: </label>
         <input
           type="text"
           name="lastName"
@@ -55,13 +55,13 @@ const Register = () => {
         />
       </p>
       <p>
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email: </label>
         <input type="email" name="email" id="email" value={data.email} onInput={handleInput} 
           required/>
       </p>
 
       <p>
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password: </label>
         <input
           type="password"
           name="password"
@@ -73,11 +73,11 @@ const Register = () => {
       </p>
 
       <p>
-        <label htmlFor="phone">Phone:</label>
+        <label htmlFor="phone">Phone: </label>
         <input type="number" name="phone" id="phone" value={data.phone} onInput={handleInput} 
           required />
       </p>
-      <button type="submit"  id="registerSubmit" >Registrarse</button>
+      <button type="submit"  id="registerSubmit" >Sign Up</button>
 
     </form>
     </>

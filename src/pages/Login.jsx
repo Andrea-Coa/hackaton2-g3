@@ -29,17 +29,17 @@ const Login = () => {
     <>
     <form onSubmit={handleSubmit}>
         <p>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email: </label>
         <input type="email" name="email" id="email"  value={data.email} onChange={handleInput} required/>
         </p>
         <p>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Password: </label>
         <input type="password" name="password" id="password" value={data.password} onChange={handleInput} required/>
         </p>
 
-        <button type="submit">Logearse</button>
+        <button type="submit">Sign In</button>
     </form>
-    <button onClick={()=> {navigate('/auth/register')}}>Registrarse</button>
+    <button onClick={()=> {navigate('/auth/register')}}>Sign Up</button>
     </>
   )
 }
