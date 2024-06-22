@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://127.0.0.1:80";
+const URL = "https://cepnq6rjbk.execute-api.us-east-1.amazonaws.com/";
 
 export const fetchLogin = async (body) => {
   try {
@@ -73,3 +73,4 @@ export const deleteRide = async(id)=>{
         console.error(error);
     }
 }
+
