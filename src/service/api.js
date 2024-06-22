@@ -66,8 +66,8 @@ export const fetchLogin = async (body) => {
 
 export const fetchRegister = async (username, password, role) => {
   try {
-    const response = await axios.post(`${URL}/auth/register`, {username, password, role});
-    if (response.status === 200) {
+    const response = await axios.post(`${URL}/auth/register`, body);
+    if (response.status == 200) {
       localStorage.setItem("token", response.data.token);
       console.log(token);
 
@@ -78,14 +78,20 @@ export const fetchRegister = async (username, password, role) => {
   }
 };
 
-export const postProduct = async(body) => {
-  const token = localStorage.getItem('token');
-  const response = await axios.post(`${url}/api/products`, body,{
-      headers: { Authorization: `Bearer ${token}`}
-  });
-  return response.data;
-}
 
+
+export const postProduct = async (body) => {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.post(`${URL}/api/products`, body, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear producto:', error);
+    throw error; // Optionally rethrow the error to handle it in components
+  }
+};
 
 
 export const fetchGetRides = async (page, size) => {
