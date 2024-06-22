@@ -8,7 +8,7 @@ const Register = () => {
   const [data, setData] = useState({
     username: "",
     password: "",
-    role: "Client" // Valor predeterminado para el rol
+    role: "client" // Valor predeterminado para el rol
   });
 
   const handleSubmit = async (e) => {
@@ -16,7 +16,7 @@ const Register = () => {
     try {
       const response = await fetchRegister(data);
       alert(`Registro exitoso. Nombre de usuario: ${data.username}`);
-      navigate("/login");
+      navigate("/auth/login");
       console.log(response);
     } catch (error) {
       console.error(error);
@@ -27,7 +27,7 @@ const Register = () => {
   const handleInput = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-
+console.log(data);
   return (
       <>
         <form onSubmit={handleSubmit}>
