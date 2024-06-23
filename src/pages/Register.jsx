@@ -1,87 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchRegister } from "../service/api";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { fetchRegister } from '../services/api';
 
 const Register = () => {
-  const navigate = useNavigate();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [role, setRole] = useState("");
 
-  const [data, setData] = useState({
-    username: "",
-    password: "",
-    role: "Client" // Valor predeterminado para el rol
-  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetchRegister(data);
-      alert(`Registro exitoso. Nombre de usuario: ${data.username}`);
-      navigate("/login");
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-      alert('Error en el registro');
+    const navigate = useNavigate();
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        console.log(username, password, role);
+        const res = await fetchRegister(username, password, role);
+        localStorage.setItem('token', res.data.token);
+        console.log(res.data.token);
+        navigate("/dashboard");
+
     }
-  };
 
-  const handleInput = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+    return (
+        <div>
+            <h1>Register</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="username">Username: </label>
+                <input type="text" id="username" onChange={e => setUsername(e.target.value)} required/>
+                <br />
+                <label htmlFor="password">Password: </label>
+                <input type="password" id="password" onChange={e => setPassword(e.target.value)} required/>
+                <br />
+                <label htmlFor="role">Role: </label>
+                <input type="text" id="role" onChange={e => setRole(e.target.value)} required/>
+                <br /> <br />
+                <button type="submit" className='submit'>Submit</button>
+            </form>
+            <br />
+            <button type="button" onClick={() => navigate("/auth/login")}>Login</button>
+        </div>
+    )
+}
 
-  return (
-      <>
-        <form onSubmit={handleSubmit}>
-          <p>
-            <label htmlFor="username">Nombre de usuario:</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                value={data.username}
-                onInput={handleInput}
-                required
-            />
-          </p>
-
-      <p>
-        <label htmlFor="lastName: ">LastName:</label>
-        <input
-          type="text"
-          name="lastName"
-          id="lastName"
-          value={data.lastName}
-          onInput={handleInput} 
-          required
-        />
-      </p>
-      <p>
-        <label htmlFor="email">Email:</label>
-        <input type="email" name="email" id="email" value={data.email} onInput={handleInput} 
-          required/>
-      </p>
-
-      <p>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={data.password}
-          onInput={handleInput} 
-          required
-        />
-      </p>
-
-      <p>
-        <label htmlFor="phone">Phone:</label>
-        <input type="number" name="phone" id="phone" value={data.phone} onInput={handleInput} 
-          required />
-      </p>
-      <button type="submit"  id="registerSubmit" >Registrarse</button>
-
-    </form>
-    </>
-  );
-};
-
-export default Register;
+export default Register

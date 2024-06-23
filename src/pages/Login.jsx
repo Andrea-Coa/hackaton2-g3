@@ -1,47 +1,38 @@
-import React, { useState } from 'react'
-import { fetchLogin } from '../service/api';
+import React from 'react'
+import { useState } from 'react';
+import { fetchLogin } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [data, setdata] = useState({
-        username:'',
-        password: ''
-    });
 
-    const handleSubmit= async(e)=>{
+    async function handleSubmit(e){
         e.preventDefault();
-        const response = await fetchLogin(data)
-        navigate('/dashboard')
-        console.log(response)
+        const res = await fetchLogin(username, password);
+        localStorage.setItem('token', res.data.token);
+        console.log(res.data.token);
+        navigate("/dashboard");
+
     }
 
-
-    const handleInput = (e)=>{
-        setdata({...data,
-            [e.target.name]: e.target.value}
-        )
-    };
-
-
-  return (
-    <>
-    <form onSubmit={handleSubmit}>
-        <p>
-        <label htmlFor="username">Username</label>
-        <input type="username" name="username" id="username"  value={data.username} onChange={handleInput} required/>
-        </p>
-        <p>
-        <label htmlFor="password">Password: </label>
-        <input type="password" name="password" id="password" value={data.password} onChange={handleInput} required/>
-        </p>
-
-        <button type="submit">Sign In</button>
-    </form>
-    <button onClick={()=> {navigate('/auth/register')}}>Sign Up</button>
-    </>
-  )
+    return (
+        <div>
+            <h1>Login</h1>
+            <form onSubmit={e => handleSubmit(e)}>
+                <label htmlFor="username">Username: </label>
+                <input type="text" id="username" onChange={e => setUsername(e.target.value)} required/>
+                <br />
+                <label htmlFor="password">Password: </label>
+                <input type="password" id="password" onChange={e => setPassword(e.target.value)} required/>
+                <br /> <br />
+                <button type="submit" className='submit'>Submit</button>
+            </form>
+            <br /> <br /> <br /> <br />
+            <button type="button" onClick={() => navigate("/auth/register")}>Register</button>
+        </div>
+    )
 }
 
 export default Login
