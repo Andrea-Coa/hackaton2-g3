@@ -1,56 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { deleteRide,fetchGetRides } from "../service/api";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getRoleBasedOnToken } from '../services/api';
 
 const Dashboard = () => {
-  const [data, setdata] = useState([]);
-  const [render, setrender] = useState(0);
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token || token === 'null') {
+            console.log("Debes logearte primero");
+            navigate("/auth/login");
+        } else {
+            
+            const role = getRoleBasedOnToken();
 
-  useEffect(() => {
-    const getRides = async () => {
-      try {
-        const response = await fetchGetRides(0, 2);
-        setdata(response.data.content);
-      } catch (error) {
-        
-        console.error(error);
-      }
+            if (role === 'client') {
+                console.log("Eres cliente")
+                navigate("/clientdashboard");
+            } else if (role === 'Admin') {
+                console.log("Eres administrador");
+                navigate("/admindashboard");
+            } else {
+                console.log("Rol desconocido, te enviamos al dashboard de cliente por defecto");
+                navigate("/clientdashboard");
+            }
+        }
+    }, [navigate]);
+
+    // Función auxiliar para decodificar el token JWT (simplificada)
+    const parseJwt = (token) => {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return {};
+        }
     };
-    getRides();
-  }, [render]);
 
-  
-
-
-  const handleDelete= async(id)=>{
-    try{
-        await deleteRide(id);
-        setrender(render+1);
-    }catch(error){
-        console.error(error);
-    }
-   
-  }
-
-
-
-  return (
-  <div>a
-    {data.map((ride,index)=>(
-        <div key={index} className="ride-item">
-            <p>{ride.originName}</p>
-            <p>{ride.destinationName}</p>
-            <p>{ride.price}</p>
-            <p>{ride.departureDate}</p>
-            <button onClick={()=>{handleDelete(ride.id)}}>Eliminar</button>
-            <button onClick={()=>{handleEdit(ride.id)}}>Editar</button>
-
+    return (
+        <div>
+            <h1 style={{textAlign: 'center'}}>Dashboard</h1>
         </div>
-    ))}
-
-  </div>
-
-);
+    );
 };
 
 export default Dashboard;
